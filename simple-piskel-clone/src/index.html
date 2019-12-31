@@ -7,6 +7,62 @@
   <title>simple-piskel-clone by @nshebeko</title>
 </head>
 <body>
-  
+  <div class="container">
+    <header class="header">
+      <nav class="navigation">
+        <div class="toggle">
+          <svg class="toggle_icon" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 12H18V10H0V12ZM0 7H18V5H0V7ZM0 0V2H18V0H0Z" fill="black"
+              fill-opacity="0.54" />
+          </svg>
+        </div>
+
+        <div class="logo"></div>
+      </nav>
+    </header>
+    <main class="main">
+      <div class="wrapper_left">
+        <aside class="tools">
+          <ul class="list_tools">
+            <li class="item_tools paint"><img class="icon_tools" src="assets/img/icon-share-1.png" data-src="assets/img/icon-share-1.png" alt=""><span
+                class="text_item ">Paint bucket</span></li>
+            <li class="item_tools color"><img class="icon_tools" src="assets/img/vector.png" data-src="assets/img/vector.png" alt=""><span
+                class="text_item">Choose color</span></li>
+                <li class="item_tools pensil"><img class="icon_tools" src="assets/img/icon-pencil.png" data-src="assets/img/icon-pencil.png" alt=""><span
+                class="text_item">Pensil</span></li>
+            <li class="item_tools"><img class="icon_tools" src="assets/img/icon-copy.png" data-src="assets/img/icon-copy.png" alt=""><span
+                class="text_item">Move</span></li>
+            <li class="item_tools"><img class="icon_tools" src="assets/img/icon-share.png" data-src="assets/img/icon-share.png" alt=""><span
+                class="text_item">Transform</span></li>
+          </ul>
+        </aside>
+        <aside class="color-palette">
+          <ul class="list_tools">
+            <li class="item_tools"><p class="color_item"></p><span
+                class="text_item">Current color</span></li>
+            <li class="item_tools"><p class="color_item"></p><span
+                class="text_item">Prev color</span></li>
+            <li class="item_tools"><p class="color_item"></p><span
+                class="text_item">red</span></li>
+            <li class="item_tools"><p class="color_item"></p><span
+                class="text_item">red</span></li>
+          </ul>
+        </aside>
+      </div>
+      <div class="wrapper_center">
+        <canvas id="canvas" class="canvas"></canvas>
+      </div>
+      <div class="wrapper_right">
+        <aside class="size">
+<ul class="list_tools">
+    <li class="item_tools" id="size32">32x32</li>
+    <li class="item_tools" id="size64">64x64</li>
+    <li class="item_tools" id="size128">128x128</li>
+</ul>
+        </aside>
+      </div>
+    </main>
+    <footer class="footer"></footer>
+  </div>
 </body>
 </html>

@@ -14,7 +14,7 @@ module.exports = {
   "globals": {
       "Atomics": "readonly",
       "SharedArrayBuffer": "readonly",
-      "require": true
+      "require": true,
   },
   "parserOptions": {
       "ecmaFeatures": {
@@ -36,6 +36,7 @@ module.exports = {
       "indent": ["off", "tab", "error", 2],
       "comma-dangle": "off",
       "arrow-parens": "off",
+      "no-constant-condition": ["error", { "checkLoops": false }],
   },
       "settings": {
          

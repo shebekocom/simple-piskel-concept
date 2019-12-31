@@ -3553,14 +3553,37 @@ eval("/**\n * Copyright (c) 2014-present, Facebook, Inc.\n *\n * This source cod
 
 /***/ }),
 
+/***/ "./src/css/style.css":
+/*!***************************!*\
+  !*** ./src/css/style.css ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/css/style.css?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./css/style.css */ \"./src/css/style.css\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _babel_polyfill__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/polyfill */ \"./node_modules/@babel/polyfill/lib/index.js\");\n/* harmony import */ var _babel_polyfill__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_polyfill__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nvar canvas = document.querySelector('canvas');\nvar ctx = canvas.getContext('2d');\nvar isMouseDown = false;\nvar pixelSize = 32;\ncanvas.width = '512';\ncanvas.height = '512'; // render app\n\nfunction renderApp() {\n  console.log('render app');\n} // bresenham algoritm\n\n\nfunction drawImage(pos0, pos1) {\n  var x0 = pos0[0];\n  var y0 = pos0[1];\n  var x1 = pos1[0];\n  var y1 = pos1[1];\n  var size = pixelSize;\n  var dx = Math.abs(x1 - x0);\n  var dy = Math.abs(y1 - y0);\n  var sx = x0 < x1 ? size : -size;\n  var sy = y0 < y1 ? size : -size;\n  var err = dx - dy;\n\n  while (true) {\n    ctx.fillRect(x0, y0, size, size);\n    ctx.fill();\n\n    if (x0 === x1 && y0 === y1) {\n      break;\n    }\n\n    var e2 = 2 * err;\n\n    if (e2 > -dy) {\n      err -= dy;\n      x0 += sx;\n    }\n\n    if (e2 < dx) {\n      err += dx;\n      y0 += sy;\n    }\n  }\n} // listeners function app\n\n\nfunction setUpListners() {\n  var pos0 = [];\n  var pos1 = [];\n  canvas.addEventListener('mousedown', function (e) {\n    isMouseDown = true;\n    var size = pixelSize;\n    var x = Math.floor(e.offsetX / size) * size;\n    var y = Math.floor(e.offsetY / size) * size;\n    pos0 = [x, y];\n    pos1 = [x, y];\n    ctx.fillRect(x, y, size, size);\n    ctx.fill();\n  });\n  canvas.addEventListener('mouseup', function () {\n    isMouseDown = false;\n    ctx.beginPath();\n  });\n  canvas.addEventListener('mousemove', function (e) {\n    var size = pixelSize;\n    var x = Math.floor(e.offsetX / size) * size;\n    var y = Math.floor(e.offsetY / size) * size;\n\n    if (isMouseDown) {\n      if (pos0[0] === undefined && pos0[1] === undefined) {\n        pos0 = [x, y];\n        pos1 = [x, y];\n      } else {\n        pos0 = [pos1[0], pos1[1]];\n        pos1 = [x, y];\n      }\n\n      drawImage(pos0, pos1);\n    }\n  });\n  canvas.addEventListener('mouseleave', function () {\n    pos0 = [];\n    pos1 = [];\n  });\n} // init function\n\n\nfunction init() {\n  setUpListners();\n  renderApp();\n}\n\ninit();\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/scss/style.scss":
+/*!*****************************!*\
+  !*** ./src/scss/style.scss ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/scss/style.scss?");
 
 /***/ }),
 
