@@ -9,10 +9,7 @@ import strokeTool from './modules/strokeTool'; // stroke tools
 import drawImage from './modules/drawImage'; // stroke tools
 
 const canvas = document.querySelector('canvas');
-console.dir(canvas);
 const ctx = canvas.getContext('2d');
-
-console.log(typeof canvas.height);
 let isMouseDown = false;
 let pos0 = [];
 let pos1 = [];
@@ -20,9 +17,9 @@ let curTool = '';
 let curColor = 'black';
 ctx.fillStyle = curColor;
 // let prevColor = 'red';
+let canvasSize = 128;
 let pixelSize = 1;
-canvas.width = 512 / pixelSize;
-canvas.height = 512 / pixelSize;
+console.log('pixelSize: ', pixelSize);
 function setTool(x, y) {
   switch (curTool) {
     case 'pensil':
@@ -34,7 +31,7 @@ function setTool(x, y) {
         pos0 = [pos1[0], pos1[1]];
         pos1 = [x, y];
       }
-      drawImage(pos0, pos1, ctx, curColor, curTool, canvas);
+      drawImage(pos0, pos1, ctx, curColor, curTool, pixelSize, canvas);
       pensilTool();
       break;
 
@@ -53,7 +50,7 @@ function setTool(x, y) {
     case 'stroke':
       pos1 = [x, y];
       ctx.beginPath();
-      drawImage(pos0, pos1, ctx, curColor, curTool, canvas);
+      drawImage(pos0, pos1, ctx, curColor, curTool, pixelSize, canvas);
       strokeTool();
       break;
 
@@ -72,22 +69,25 @@ function switchLineSize(event, item) {
   document.querySelector('[data-line-size].selected').classList.toggle('selected');
   item.classList.toggle('selected');
   pixelSize = Number(item.dataset.lineSize);
-  canvas.width = 512 / pixelSize;
-  canvas.height = 512 / pixelSize;
-  console.log('canvas.height: ', canvas.height);
+}
+
+function switchCanvasSize(event, item) {
+  document.querySelector('[data-canvas-size].selected').classList.toggle('selected');
+  item.classList.toggle('selected');
+  canvasSize = Number(item.dataset.canvasSize);
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
 }
 
 function mouseDown(event) {
   isMouseDown = true;
-  // const x = Math.floor(event.offsetX / pixelSize) * pixelSize;
-  // const y = Math.floor(event.offsetY / pixelSize) * pixelSize;
   const x = Math.floor(event.offsetX / (canvas.clientWidth / canvas.width));
   const y = Math.floor(event.offsetY / (canvas.clientHeight / canvas.height));
   pos0 = [x, y];
-  // if (curTool !== 'pensil') return;
+  // if (curTool !== 'pensil' || curTool !== 'stroke') return;
   pos1 = [x, y];
   ctx.fillStyle = curColor;
-  ctx.fillRect(x, y, 1, 1);
+  ctx.fillRect(x, y, pixelSize, pixelSize);
   ctx.fill();
 }
 
@@ -97,8 +97,6 @@ function mouseUp() {
 }
 
 function mouseMove(event) {
-  // const x = Math.floor(event.offsetX / pixelSize) * pixelSize;
-  // const y = Math.floor(event.offsetY / pixelSize) * pixelSize;
   const x = Math.floor(event.offsetX / (canvas.clientWidth / canvas.width));
   const y = Math.floor(event.offsetY / (canvas.clientHeight / canvas.height));
   if (isMouseDown) {
@@ -128,6 +126,9 @@ function setUpListners() {
   });
   document.querySelector('#color1').addEventListener('input', event => {
     curColor = event.target.value;
+  });
+  document.querySelectorAll('[data-canvas-size]').forEach(item => {
+    item.addEventListener('click', event => switchCanvasSize(event, item));
   });
   canvas.addEventListener('mousedown', mouseDown);
   canvas.addEventListener('mouseup', mouseUp);
