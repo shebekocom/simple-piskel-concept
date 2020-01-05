@@ -3572,7 +3572,79 @@ eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./css/style.css */ \"./src/css/style.css\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _babel_polyfill__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/polyfill */ \"./node_modules/@babel/polyfill/lib/index.js\");\n/* harmony import */ var _babel_polyfill__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_polyfill__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nvar canvas = document.querySelector('canvas');\nvar ctx = canvas.getContext('2d');\nvar isMouseDown = false;\nvar pixelSize = 32;\ncanvas.width = '512';\ncanvas.height = '512'; // render app\n\nfunction renderApp() {\n  console.log('render app');\n} // bresenham algoritm\n\n\nfunction drawImage(pos0, pos1) {\n  var x0 = pos0[0];\n  var y0 = pos0[1];\n  var x1 = pos1[0];\n  var y1 = pos1[1];\n  var size = pixelSize;\n  var dx = Math.abs(x1 - x0);\n  var dy = Math.abs(y1 - y0);\n  var sx = x0 < x1 ? size : -size;\n  var sy = y0 < y1 ? size : -size;\n  var err = dx - dy;\n\n  while (true) {\n    ctx.fillRect(x0, y0, size, size);\n    ctx.fill();\n\n    if (x0 === x1 && y0 === y1) {\n      break;\n    }\n\n    var e2 = 2 * err;\n\n    if (e2 > -dy) {\n      err -= dy;\n      x0 += sx;\n    }\n\n    if (e2 < dx) {\n      err += dx;\n      y0 += sy;\n    }\n  }\n} // listeners function app\n\n\nfunction setUpListners() {\n  var pos0 = [];\n  var pos1 = [];\n  canvas.addEventListener('mousedown', function (e) {\n    isMouseDown = true;\n    var size = pixelSize;\n    var x = Math.floor(e.offsetX / size) * size;\n    var y = Math.floor(e.offsetY / size) * size;\n    pos0 = [x, y];\n    pos1 = [x, y];\n    ctx.fillRect(x, y, size, size);\n    ctx.fill();\n  });\n  canvas.addEventListener('mouseup', function () {\n    isMouseDown = false;\n    ctx.beginPath();\n  });\n  canvas.addEventListener('mousemove', function (e) {\n    var size = pixelSize;\n    var x = Math.floor(e.offsetX / size) * size;\n    var y = Math.floor(e.offsetY / size) * size;\n\n    if (isMouseDown) {\n      if (pos0[0] === undefined && pos0[1] === undefined) {\n        pos0 = [x, y];\n        pos1 = [x, y];\n      } else {\n        pos0 = [pos1[0], pos1[1]];\n        pos1 = [x, y];\n      }\n\n      drawImage(pos0, pos1);\n    }\n  });\n  canvas.addEventListener('mouseleave', function () {\n    pos0 = [];\n    pos1 = [];\n  });\n} // init function\n\n\nfunction init() {\n  setUpListners();\n  renderApp();\n}\n\ninit();\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./css/style.css */ \"./src/css/style.css\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _babel_polyfill__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/polyfill */ \"./node_modules/@babel/polyfill/lib/index.js\");\n/* harmony import */ var _babel_polyfill__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_polyfill__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _modules_pensilTool__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/pensilTool */ \"./src/modules/pensilTool.js\");\n/* harmony import */ var _modules_colorTool__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/colorTool */ \"./src/modules/colorTool.js\");\n/* harmony import */ var _modules_fillTool__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/fillTool */ \"./src/modules/fillTool.js\");\n/* harmony import */ var _modules_eraserTool__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/eraserTool */ \"./src/modules/eraserTool.js\");\n/* harmony import */ var _modules_strokeTool__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/strokeTool */ \"./src/modules/strokeTool.js\");\n/* harmony import */ var _modules_drawImage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/drawImage */ \"./src/modules/drawImage.js\");\n\n\n\n // pensil tools\n\n // color tools\n\n // fill bucket tools\n\n // eraser tools\n\n // stroke tools\n\n // stroke tools\n\nvar canvas = document.querySelector('canvas');\nvar ctx = canvas.getContext('2d');\nconsole.log('ctx: ', ctx);\ncanvas.width = '512';\ncanvas.height = '512';\nvar isMouseDown = false;\nvar pos0 = [];\nvar pos1 = [];\nvar curTool = '';\nvar curColor = 'black';\nctx.fillStyle = curColor; // let prevColor = 'red';\n\nvar pixelSize = 1;\n\nfunction setTool(x, y) {\n  switch (curTool) {\n    case 'pensil':\n      if (pos0[0] === undefined && pos0[1] === undefined) {\n        pos0 = [x, y];\n        pos1 = [x, y];\n      } else {\n        pos0 = [pos1[0], pos1[1]];\n        pos1 = [x, y];\n      }\n\n      Object(_modules_drawImage__WEBPACK_IMPORTED_MODULE_8__[\"default\"])(pos0, pos1, ctx, pixelSize, curColor);\n      Object(_modules_pensilTool__WEBPACK_IMPORTED_MODULE_3__[\"default\"])();\n      break;\n\n    case 'color':\n      Object(_modules_colorTool__WEBPACK_IMPORTED_MODULE_4__[\"default\"])();\n      break;\n\n    case 'fill':\n      Object(_modules_fillTool__WEBPACK_IMPORTED_MODULE_5__[\"default\"])();\n      break;\n\n    case 'eraser':\n      Object(_modules_eraserTool__WEBPACK_IMPORTED_MODULE_6__[\"default\"])();\n      break;\n\n    case 'stroke':\n      Object(_modules_strokeTool__WEBPACK_IMPORTED_MODULE_7__[\"default\"])();\n      break;\n\n    default:\n      console.log('дефолтовый инструмент');\n  }\n}\n\nfunction switchTool(event, item) {\n  // if (event.target.tagName === 'UL') return;\n  // document.querySelectorAll('li').forEach(li => li.classList.remove('selected'));\n  // event.target.closest('li').classList.add('selected');\n  // curTool = event.target.closest('li').dataset.name;\n  document.querySelector('[data-tool].selected').classList.toggle('selected');\n  item.classList.toggle('selected');\n  curTool = item.dataset.tool;\n}\n\nfunction switchLineSize(event, item) {\n  document.querySelector('[data-line-size].selected').classList.toggle('selected');\n  item.classList.toggle('selected');\n  pixelSize = Number(item.dataset.lineSize);\n}\n\nfunction mouseDown(event) {\n  isMouseDown = true; // const size = pixelSize;\n\n  var x = Math.floor(event.offsetX / pixelSize) * pixelSize;\n  var y = Math.floor(event.offsetY / pixelSize) * pixelSize;\n  if (curTool !== 'pensil') return;\n  pos0 = [x, y];\n  pos1 = [x, y];\n  ctx.fillStyle = curColor;\n  ctx.fillRect(x, y, pixelSize, pixelSize);\n  ctx.fill();\n}\n\nfunction mouseUp() {\n  isMouseDown = false;\n  ctx.beginPath();\n}\n\nfunction mouseMove(event) {\n  // const size = pixelSize;\n  var x = Math.floor(event.offsetX / pixelSize) * pixelSize;\n  var y = Math.floor(event.offsetY / pixelSize) * pixelSize;\n\n  if (isMouseDown) {\n    setTool(x, y);\n  }\n}\n\nfunction mouseLeave() {\n  pos0 = [];\n  pos1 = [];\n} // render app\n\n\nfunction renderApp() {\n  console.log('render app');\n} // listeners function app\n\n\nfunction setUpListners() {\n  // document.querySelector('.list_tools').addEventListener('click', event => switchTool(event));\n  document.querySelectorAll('[data-tool]').forEach(function (item) {\n    item.addEventListener('click', function (event) {\n      return switchTool(event, item);\n    });\n  });\n  document.querySelectorAll('[data-line-size]').forEach(function (item) {\n    item.addEventListener('click', function (event) {\n      return switchLineSize(event, item);\n    });\n  });\n  document.querySelector('#color1').addEventListener('input', function (event) {\n    curColor = event.target.value;\n  });\n  canvas.addEventListener('mousedown', mouseDown);\n  canvas.addEventListener('mouseup', mouseUp);\n  canvas.addEventListener('mousemove', mouseMove);\n  canvas.addEventListener('mouseleave', mouseLeave);\n} // init function\n\n\nfunction init() {\n  setUpListners();\n  renderApp();\n}\n\ninit();\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/modules/colorTool.js":
+/*!**********************************!*\
+  !*** ./src/modules/colorTool.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return colorTool; });\nfunction colorTool() {// код Дмитрия\n  //   function colorPicker(e) {\n  //     const x = Math.floor(e.offsetX / (canvas.clientWidth / canvas.width));\n  //     const y = Math.floor(e.offsetY / (canvas.clientHeight / canvas.height));\n  //     const pixelData = ctx.getImageData(x, y, 1, 1);\n  //     const hex = pixelData.data ? `#${\n  //         (pixelData.data[0] | 1 << 8).toString(16).slice(1)\n  //     }${(pixelData.data[1] | 1 << 8).toString(16).slice(1)\n  //     }${(pixelData.data[2] | 1 << 8).toString(16).slice(1)}` : pixelData;\n  //     if (e.which === 1 || e.which === 2) {\n  //         firstColor = hex;\n  //         document.querySelector('#firstColor').value = hex;\n  //         document.querySelector('.canvas-tools__change-color__primary-color').style.backgroundColor = hex;\n  //     } else if (e.which === 3) {\n  //         secondColor = hex;\n  //         document.querySelector('#secondColor').value = hex;\n  //         document.querySelector('.canvas-tools__change-color__secondary-color').style.backgroundColor = hex;\n  //     }\n  // }\n  // референц https://codepen.io/amwill/pen/ZbdGeW\n}\n\n//# sourceURL=webpack:///./src/modules/colorTool.js?");
+
+/***/ }),
+
+/***/ "./src/modules/drawImage.js":
+/*!**********************************!*\
+  !*** ./src/modules/drawImage.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return drawImage; });\nfunction drawImage(pos0, pos1, ctx, pixelSize, curColor) {\n  // bresenham algoritm\n  var x0 = pos0[0];\n  var y0 = pos0[1];\n  var x1 = pos1[0];\n  var y1 = pos1[1]; // const size = pixelSize;\n\n  var dx = Math.abs(x1 - x0);\n  var dy = Math.abs(y1 - y0);\n  var sx = x0 < x1 ? pixelSize : -pixelSize;\n  var sy = y0 < y1 ? pixelSize : -pixelSize;\n  var err = dx - dy;\n\n  while (true) {\n    ctx.fillStyle = curColor;\n    ctx.fillRect(x0, y0, pixelSize, pixelSize);\n    ctx.fill();\n\n    if (x0 === x1 && y0 === y1) {\n      break;\n    }\n\n    var e2 = 2 * err;\n\n    if (e2 > -dy) {\n      err -= dy;\n      x0 += sx;\n    }\n\n    if (e2 < dx) {\n      err += dx;\n      y0 += sy;\n    }\n  }\n}\n\n//# sourceURL=webpack:///./src/modules/drawImage.js?");
+
+/***/ }),
+
+/***/ "./src/modules/eraserTool.js":
+/*!***********************************!*\
+  !*** ./src/modules/eraserTool.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return eraserTool; });\nfunction eraserTool() {\n  console.log('включился ластик');\n}\n\n//# sourceURL=webpack:///./src/modules/eraserTool.js?");
+
+/***/ }),
+
+/***/ "./src/modules/fillTool.js":
+/*!*********************************!*\
+  !*** ./src/modules/fillTool.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return fillTool; });\nfunction fillTool() {\n  console.log('включилась заливка');\n}\n\n//# sourceURL=webpack:///./src/modules/fillTool.js?");
+
+/***/ }),
+
+/***/ "./src/modules/pensilTool.js":
+/*!***********************************!*\
+  !*** ./src/modules/pensilTool.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return pensilTool; });\nfunction pensilTool() {\n  console.log('карандаш');\n}\n\n//# sourceURL=webpack:///./src/modules/pensilTool.js?");
+
+/***/ }),
+
+/***/ "./src/modules/strokeTool.js":
+/*!***********************************!*\
+  !*** ./src/modules/strokeTool.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return strokeTool; });\nfunction strokeTool() {\n  console.log('включилась линия');\n}\n\n//# sourceURL=webpack:///./src/modules/strokeTool.js?");
 
 /***/ }),
 

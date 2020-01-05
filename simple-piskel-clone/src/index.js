@@ -1,82 +1,30 @@
 import './css/style.css';
 import './scss/style.scss';
 import '@babel/polyfill';
+import pensilTool from './modules/pensilTool'; // pensil tools
+import colorTool from './modules/colorTool'; // color tools
+import fillTool from './modules/fillTool'; // fill bucket tools
+import eraserTool from './modules/eraserTool'; // eraser tools
+import strokeTool from './modules/strokeTool'; // stroke tools
+import drawImage from './modules/drawImage'; // stroke tools
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-let isMouseDown = false;
-const pixelSize = 32;
-
+console.log('ctx: ', ctx);
 canvas.width = '512';
 canvas.height = '512';
+let isMouseDown = false;
+let pos0 = [];
+let pos1 = [];
+let curTool = '';
+let curColor = 'black';
+ctx.fillStyle = curColor;
+// let prevColor = 'red';
+let pixelSize = 1;
 
-// render app
-
-function renderApp() {
-  console.log('render app');
-}
-
-// bresenham algoritm
-
-function drawImage(pos0, pos1) {
-  let x0 = pos0[0];
-  let y0 = pos0[1];
-  const x1 = pos1[0];
-  const y1 = pos1[1];
-  const size = pixelSize;
-  const dx = Math.abs(x1 - x0);
-  const dy = Math.abs(y1 - y0);
-  const sx = x0 < x1 ? size : -size;
-  const sy = y0 < y1 ? size : -size;
-  let err = dx - dy;
-
-  while (true) {
-    ctx.fillRect(x0, y0, size, size);
-    ctx.fill();
-
-    if (x0 === x1 && y0 === y1) {
-      break;
-    }
-    const e2 = 2 * err;
-    if (e2 > -dy) {
-      err -= dy;
-      x0 += sx;
-    }
-    if (e2 < dx) {
-      err += dx;
-      y0 += sy;
-    }
-  }
-}
-
-// listeners function app
-
-function setUpListners() {
-  let pos0 = [];
-  let pos1 = [];
-  canvas.addEventListener('mousedown', e => {
-    isMouseDown = true;
-    const size = pixelSize;
-    const x = Math.floor(e.offsetX / size) * size;
-    const y = Math.floor(e.offsetY / size) * size;
-
-    pos0 = [x, y];
-    pos1 = [x, y];
-    ctx.fillRect(x, y, size, size);
-    ctx.fill();
-  });
-
-  canvas.addEventListener('mouseup', () => {
-    isMouseDown = false;
-    ctx.beginPath();
-  });
-
-  canvas.addEventListener('mousemove', e => {
-    const size = pixelSize;
-    const x = Math.floor(e.offsetX / size) * size;
-    const y = Math.floor(e.offsetY / size) * size;
-
-    if (isMouseDown) {
+function setTool(x, y) {
+  switch (curTool) {
+    case 'pensil':
       if (pos0[0] === undefined && pos0[1] === undefined) {
         pos0 = [x, y];
         pos1 = [x, y];
@@ -84,14 +32,103 @@ function setUpListners() {
         pos0 = [pos1[0], pos1[1]];
         pos1 = [x, y];
       }
-      drawImage(pos0, pos1);
-    }
-  });
+      drawImage(pos0, pos1, ctx, pixelSize, curColor);
+      pensilTool();
+      break;
 
-  canvas.addEventListener('mouseleave', () => {
-    pos0 = [];
-    pos1 = [];
+    case 'color':
+      colorTool();
+      break;
+
+    case 'fill':
+      fillTool();
+      break;
+
+    case 'eraser':
+      eraserTool();
+      break;
+
+    case 'stroke':
+      strokeTool();
+      break;
+
+    default:
+      console.log('дефолтовый инструмент');
+  }
+}
+
+function switchTool(event, item) {
+  // if (event.target.tagName === 'UL') return;
+  // document.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
+  // event.target.closest('li').classList.add('selected');
+  // curTool = event.target.closest('li').dataset.name;
+
+  document.querySelector('[data-tool].selected').classList.toggle('selected');
+  item.classList.toggle('selected');
+  curTool = item.dataset.tool;
+}
+
+function switchLineSize(event, item) {
+  document.querySelector('[data-line-size].selected').classList.toggle('selected');
+  item.classList.toggle('selected');
+  pixelSize = Number(item.dataset.lineSize);
+}
+
+function mouseDown(event) {
+  isMouseDown = true;
+  // const size = pixelSize;
+  const x = Math.floor(event.offsetX / pixelSize) * pixelSize;
+  const y = Math.floor(event.offsetY / pixelSize) * pixelSize;
+  if (curTool !== 'pensil') return;
+  pos0 = [x, y];
+  pos1 = [x, y];
+  ctx.fillStyle = curColor;
+  ctx.fillRect(x, y, pixelSize, pixelSize);
+  ctx.fill();
+}
+
+function mouseUp() {
+  isMouseDown = false;
+  ctx.beginPath();
+}
+
+function mouseMove(event) {
+  // const size = pixelSize;
+  const x = Math.floor(event.offsetX / pixelSize) * pixelSize;
+  const y = Math.floor(event.offsetY / pixelSize) * pixelSize;
+  if (isMouseDown) {
+    setTool(x, y);
+  }
+}
+
+function mouseLeave() {
+  pos0 = [];
+  pos1 = [];
+}
+
+// render app
+
+function renderApp() {
+  console.log('render app');
+}
+
+// listeners function app
+
+function setUpListners() {
+  // document.querySelector('.list_tools').addEventListener('click', event => switchTool(event));
+  document.querySelectorAll('[data-tool]').forEach(item => {
+    item.addEventListener('click', event => switchTool(event, item));
   });
+  document.querySelectorAll('[data-line-size]').forEach(item => {
+    item.addEventListener('click', event => switchLineSize(event, item));
+  });
+  document.querySelector('#color1').addEventListener('input', event => {
+    curColor = event.target.value;
+  });
+  canvas.addEventListener('mousedown', mouseDown);
+  canvas.addEventListener('mouseup', mouseUp);
+  canvas.addEventListener('mousemove', mouseMove);
+  canvas.addEventListener('mouseleave', mouseLeave);
 }
 
 // init function
