@@ -23,7 +23,6 @@ console.log('pixelSize: ', pixelSize);
 function setTool(x, y) {
   switch (curTool) {
     case 'pensil':
-      console.log('зачем?');
       if (pos0[0] === undefined && pos0[1] === undefined) {
         pos0 = [x, y];
         pos1 = [x, y];
@@ -31,7 +30,7 @@ function setTool(x, y) {
         pos0 = [pos1[0], pos1[1]];
         pos1 = [x, y];
       }
-      drawImage(pos0, pos1, ctx, curColor, curTool, pixelSize, canvas);
+      drawImage(pos0, pos1, ctx, curColor, pixelSize);
       pensilTool();
       break;
 
@@ -44,13 +43,20 @@ function setTool(x, y) {
       break;
 
     case 'eraser':
+      if (pos0[0] === undefined && pos0[1] === undefined) {
+        pos0 = [x, y];
+        pos1 = [x, y];
+      } else {
+        pos0 = [pos1[0], pos1[1]];
+        pos1 = [x, y];
+      }
+      drawImage(pos0, pos1, ctx, curColor, pixelSize);
       eraserTool();
       break;
 
     case 'stroke':
       pos1 = [x, y];
-      ctx.beginPath();
-      drawImage(pos0, pos1, ctx, curColor, curTool, pixelSize, canvas);
+      drawImage(pos0, pos1, ctx, curColor, pixelSize);
       strokeTool();
       break;
 
@@ -84,14 +90,26 @@ function mouseDown(event) {
   const x = Math.floor(event.offsetX / (canvas.clientWidth / canvas.width));
   const y = Math.floor(event.offsetY / (canvas.clientHeight / canvas.height));
   pos0 = [x, y];
-  // if (curTool !== 'pensil' || curTool !== 'stroke') return;
-  pos1 = [x, y];
-  ctx.fillStyle = curColor;
-  ctx.fillRect(x, y, pixelSize, pixelSize);
-  ctx.fill();
+  if (curTool === 'pensil' || curTool === 'eraser') {
+    if (curTool === 'pensil') {
+      ctx.globalCompositeOperation = 'source-over';
+    } else {
+      ctx.globalCompositeOperation = 'destination-out';
+    }
+    pos1 = [x, y];
+    ctx.fillStyle = curColor;
+    ctx.fillRect(x, y, pixelSize, pixelSize);
+    ctx.fill();
+  }
 }
 
-function mouseUp() {
+function mouseUp(event) {
+  if (curTool === 'stroke') {
+    const x = Math.floor(event.offsetX / (canvas.clientWidth / canvas.width));
+    const y = Math.floor(event.offsetY / (canvas.clientHeight / canvas.height));
+    setTool(x, y);
+  }
+
   isMouseDown = false;
   ctx.beginPath();
 }
@@ -99,8 +117,10 @@ function mouseUp() {
 function mouseMove(event) {
   const x = Math.floor(event.offsetX / (canvas.clientWidth / canvas.width));
   const y = Math.floor(event.offsetY / (canvas.clientHeight / canvas.height));
-  if (isMouseDown) {
-    setTool(x, y);
+  if (curTool === 'pensil' || curTool === 'eraser') {
+    if (isMouseDown) {
+      setTool(x, y);
+    }
   }
 }
 
