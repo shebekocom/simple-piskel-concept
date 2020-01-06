@@ -15,6 +15,8 @@ let pos0 = [];
 let pos1 = [];
 let curTool = '';
 let curColor = 'black';
+const borderColor = 'black';
+console.log('borderColor: ', borderColor);
 ctx.fillStyle = curColor;
 // let prevColor = 'red';
 let canvasSize = 128;
@@ -35,11 +37,11 @@ function setTool(x, y) {
       break;
 
     case 'color':
-      colorTool();
+      curColor = colorTool(ctx, x, y, canvas, curColor);
       break;
 
     case 'fill':
-      fillTool();
+      fillTool(ctx, x, y, 255, 255);
       break;
 
     case 'eraser':
@@ -100,6 +102,12 @@ function mouseDown(event) {
     ctx.fillStyle = curColor;
     ctx.fillRect(x, y, pixelSize, pixelSize);
     ctx.fill();
+  }
+  if (curTool === 'fill') {
+    setTool(x, y);
+  }
+  if (curTool === 'color') {
+    setTool(x, y);
   }
 }
 
