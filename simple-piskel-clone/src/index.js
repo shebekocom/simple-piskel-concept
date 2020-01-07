@@ -14,6 +14,7 @@ let isMouseDown = false;
 let pos0 = [];
 let pos1 = [];
 let curTool = '';
+const color = '#000000';
 let curColor = 'black';
 const borderColor = 'black';
 console.log('borderColor: ', borderColor);
@@ -41,7 +42,7 @@ function setTool(x, y) {
       break;
 
     case 'fill':
-      fillTool(ctx, x, y, 255, 255);
+      fillTool(ctx, x, y, canvas, color);
       break;
 
     case 'eraser':
