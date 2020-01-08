@@ -79,6 +79,8 @@ function setTool(x, y) {
   }
 }
 
+// listener function
+
 function switchTool(event, item) {
   document.querySelector('[data-tool].selected').classList.toggle('selected');
   item.classList.toggle('selected');
@@ -104,6 +106,28 @@ function switchCanvasSize(event, item) {
   ctx.putImageData(imageData, 0, 0);
   ctxFrame.putImageData(imageDataFrame, 0, 0);
 }
+function addNewFrame() {
+  const canvasFrames = document.querySelectorAll('[data-title-name]');
+  canvasFrames.forEach(item => {
+    item.classList.remove('selected_canvas');
+  });
+  document.querySelector('.frame-list').insertAdjacentHTML(
+    'beforeend',
+    `<li class="frame-title" data-title-name="2">
+  <div class="canvas-bg">
+      <div></div>
+      <canvas class="frame-canvas" data-canvas-count="2" width="32" height="32"></canvas>
+  </div>
+  <div class="frame-number">${canvasFrames.length + 1}</div>
+  <div class="del-frame remove"></div>
+  <div class="move-frame remove"></div>
+  <div class="duplicate-frame"></div>
+</li>`,
+  );
+  document.querySelector('.frame-title:last-child').classList.add('selected_canvas');
+}
+
+// mouse action
 
 function mouseDown(event) {
   isMouseDown = true;
@@ -177,6 +201,7 @@ function setUpListners() {
   document.querySelectorAll('[data-canvas-size]').forEach(item => {
     item.addEventListener('click', event => switchCanvasSize(event, item));
   });
+  document.querySelector('.add-frame-action').addEventListener('click', () => addNewFrame());
   canvas.addEventListener('mousedown', mouseDown);
   canvas.addEventListener('mouseup', mouseUp);
   canvas.addEventListener('mousemove', mouseMove);
