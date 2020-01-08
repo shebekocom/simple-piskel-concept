@@ -9,6 +9,11 @@ import strokeTool from './modules/strokeTool'; // stroke tools
 import drawImage from './modules/drawImage'; // stroke tools
 
 const canvas = document.querySelector('.canvas');
+const canvasFmame = document.querySelector('.frame-canvas');
+const ctxFrame = canvasFmame.getContext('2d');
+
+console.log('ctxFrame: ', ctxFrame);
+console.log('canvasFmame: ', canvasFmame);
 const ctx = canvas.getContext('2d');
 let isMouseDown = false;
 let pos0 = [];
@@ -19,9 +24,16 @@ const borderColor = '#000000';
 console.log('borderColor: ', borderColor);
 ctx.fillStyle = curColor;
 // let prevColor = 'red';
-let canvasSize = 128;
+let canvasSize = 32;
+canvas.width = canvasSize;
+canvas.height = canvasSize;
+canvasFmame.width = canvasSize;
+canvasFmame.height = canvasSize;
 let pixelSize = 1;
 console.log('pixelSize: ', pixelSize);
+function newFrame() {
+  ctxFrame.drawImage(canvas, 0, 0);
+}
 function setTool(x, y) {
   switch (curTool) {
     case 'pensil':
@@ -83,8 +95,14 @@ function switchCanvasSize(event, item) {
   document.querySelector('[data-canvas-size].selected').classList.toggle('selected');
   item.classList.toggle('selected');
   canvasSize = Number(item.dataset.canvasSize);
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const imageDataFrame = ctx.getImageData(0, 0, canvasFmame.width, canvasFmame.height);
   canvas.width = canvasSize;
   canvas.height = canvasSize;
+  canvasFmame.width = canvasSize;
+  canvasFmame.height = canvasSize;
+  ctx.putImageData(imageData, 0, 0);
+  ctxFrame.putImageData(imageDataFrame, 0, 0);
 }
 
 function mouseDown(event) {
@@ -120,6 +138,7 @@ function mouseUp(event) {
 
   isMouseDown = false;
   ctx.beginPath();
+  newFrame();
 }
 
 function mouseMove(event) {

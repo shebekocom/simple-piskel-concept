@@ -19,11 +19,11 @@ body {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 2px;
-  background-color:transparent;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-track {
-  background-color:transparent;
+  background-color: transparent;
 }
 
 canvas {
@@ -97,7 +97,6 @@ canvas {
   flex-shrink: 0;
   overflow-y: scroll;
   overflow-x: hidden;
-  
 }
 
 .frame-list {
@@ -145,6 +144,37 @@ canvas {
   height: 100%;
 }
 
+.add-frame-action {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  margin-top: 8px;
+  padding: 6px 0;
+  overflow: hidden;
+  width: 96px;
+  border: #333333 solid 2px;
+  border-radius: 4px;
+  color: #333333;
+  background-color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+
+  &--icon {
+    margin: 3px;
+    float: left;
+    flex-shrink: 0;
+    background-image: url(../assets/img/new-frame.png);
+    background-position: center center;
+    width: 26px;
+    height: 26px;
+  }
+
+  &--label {
+    overflow: hidden;
+    text-align: left;
+  }
+}
+
 .frame-number {
   display: block;
   position: absolute;
@@ -179,7 +209,7 @@ canvas {
 }
 
 .frame-title:hover .del-frame {
-  opacity: 1.0;
+  opacity: 1;
   cursor: pointer;
 }
 .move-frame {
@@ -190,16 +220,16 @@ canvas {
   border: none;
   bottom: 0;
   left: 0;
+  background-color: #f2f2f2;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url(../assets/img/pan_tool.png);
 }
 
 .frame-title:hover .move-frame {
-  opacity: 1.0;
+  opacity: 1;
   cursor: pointer;
 }
-
 
 .duplicate-frame {
   opacity: 0;
@@ -209,13 +239,14 @@ canvas {
   border: none;
   bottom: 0;
   right: 0;
+  background-color: #f2f2f2;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url(../assets/img/file_copy.png);
 }
 
 .frame-title:hover .duplicate-frame {
-  opacity: 1.0;
+  opacity: 1;
   cursor: pointer;
 }
 
@@ -281,7 +312,7 @@ canvas {
   list-style: none;
   width: 220px;
   height: 25px;
-  margin-left: 15px ;
+  margin-left: 15px;
   margin-top: 25px;
   text-align: center;
   cursor: pointer;

@@ -60,25 +60,26 @@
               <li class="frame-title selected_canvas" data-title-name="1">
                   <div class="canvas-bg">
                       <div></div>
-                      <canvas class="frame-canvas" data-count="1" width="32" height="32"></canvas>
+                      <canvas class="frame-canvas" data-canvas-count="1" width="32" height="32"></canvas>
                   </div>
                   <div class="frame-number">1</div>
                   <div class="del-frame remove"></div>
-                  <div class="move-frame icon-bg frame-functionality remove"></div>
-                  <div class="duplicate-frame icon-bg frame-functionality"></div>
+                  <div class="move-frame remove"></div>
+                  <div class="duplicate-frame"></div>
               </li>
               <li class="frame-title" data-title-name="2">
                   <div class="canvas-bg">
                       <div></div>
-                      <canvas class="frame-canvas" data-count="2" width="32" height="32"></canvas>
+                      <canvas class="frame-canvas" data-canvas-count="2" width="32" height="32"></canvas>
                   </div>
                   <div class="frame-number">2</div>
-                  <div class="del-frame icon-bg frame-functionality remove"></div>
-                  <div class="move-frame icon-bg frame-functionality remove"></div>
-                  <div class="duplicate-frame icon-bg frame-functionality"></div>
+                  <div class="del-frame remove"></div>
+                  <div class="move-frame remove"></div>
+                  <div class="duplicate-frame"></div>
               </li>
           </ul>
-          
+          <div id="add-frame-action" class="add-frame-action" data-tile-action="newframe"><div class="add-frame-action--icon"></div>
+          <div class="add-frame-action--label">Add new frame</div></div>
         </div>
       <div class="wrapper_center">
         <canvas id="canvas" class="canvas">s</canvas>
@@ -92,9 +93,9 @@
               <input id="preview-fps" class="range-fps" type="range" min="0" max="24">
         </aside>
         <ul class="canvas_size">
-            <li class="canvas_size--number" data-canvas-size="32" title="32x32 Canvas">32x32</li>
+            <li class="canvas_size--number selected" data-canvas-size="32" title="32x32 Canvas">32x32</li>
             <li class="canvas_size--number" data-canvas-size="64" title="64x64 Canvas">64x64</li>
-            <li class="canvas_size--number selected" data-canvas-size="128" title="128x128 Canvas">128x128</li>
+            <li class="canvas_size--number" data-canvas-size="128" title="128x128 Canvas">128x128</li>
         </ul>
       </div>
     </main>
