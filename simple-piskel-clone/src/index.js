@@ -8,15 +8,14 @@ import eraserTool from './modules/eraserTool'; // eraser tools
 import strokeTool from './modules/strokeTool'; // stroke tools
 import drawImage from './modules/drawImage'; // stroke tools
 
-const canvas = document.querySelector('canvas');
+const canvas = document.querySelector('.canvas');
 const ctx = canvas.getContext('2d');
 let isMouseDown = false;
 let pos0 = [];
 let pos1 = [];
 let curTool = '';
-const color = '#000000';
-let curColor = 'black';
-const borderColor = 'black';
+let curColor = '#000000';
+const borderColor = '#000000';
 console.log('borderColor: ', borderColor);
 ctx.fillStyle = curColor;
 // let prevColor = 'red';
@@ -42,7 +41,7 @@ function setTool(x, y) {
       break;
 
     case 'fill':
-      fillTool(ctx, x, y, canvas, color);
+      fillTool(ctx, x, y, canvas, curColor);
       break;
 
     case 'eraser':
