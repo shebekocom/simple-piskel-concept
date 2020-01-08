@@ -7,21 +7,17 @@ import fillTool from './modules/fillTool'; // fill bucket tools
 import eraserTool from './modules/eraserTool'; // eraser tools
 import strokeTool from './modules/strokeTool'; // stroke tools
 import drawImage from './modules/drawImage'; // stroke tools
+import addNewFrame from './modules/addNewFrame'; // add New Frame
 
 const canvas = document.querySelector('.canvas');
 const canvasFmame = document.querySelector('.frame-canvas');
 const ctxFrame = canvasFmame.getContext('2d');
-
-console.log('ctxFrame: ', ctxFrame);
-console.log('canvasFmame: ', canvasFmame);
 const ctx = canvas.getContext('2d');
 let isMouseDown = false;
 let pos0 = [];
 let pos1 = [];
 let curTool = '';
 let curColor = '#000000';
-const borderColor = '#000000';
-console.log('borderColor: ', borderColor);
 ctx.fillStyle = curColor;
 // let prevColor = 'red';
 let canvasSize = 32;
@@ -30,7 +26,6 @@ canvas.height = canvasSize;
 canvasFmame.width = canvasSize;
 canvasFmame.height = canvasSize;
 let pixelSize = 1;
-console.log('pixelSize: ', pixelSize);
 function newFrame() {
   ctxFrame.drawImage(canvas, 0, 0);
 }
@@ -106,25 +101,10 @@ function switchCanvasSize(event, item) {
   ctx.putImageData(imageData, 0, 0);
   ctxFrame.putImageData(imageDataFrame, 0, 0);
 }
-function addNewFrame() {
-  const canvasFrames = document.querySelectorAll('[data-title-name]');
-  canvasFrames.forEach(item => {
-    item.classList.remove('selected_canvas');
-  });
-  document.querySelector('.frame-list').insertAdjacentHTML(
-    'beforeend',
-    `<li class="frame-title" data-title-name="2">
-  <div class="canvas-bg">
-      <div></div>
-      <canvas class="frame-canvas" data-canvas-count="2" width="32" height="32"></canvas>
-  </div>
-  <div class="frame-number">${canvasFrames.length + 1}</div>
-  <div class="del-frame remove"></div>
-  <div class="move-frame remove"></div>
-  <div class="duplicate-frame"></div>
-</li>`,
-  );
-  document.querySelector('.frame-title:last-child').classList.add('selected_canvas');
+
+function switchFrame(event, item) {
+  document.querySelector('[data-title-name].selected_canvas').classList.toggle('selected_canvas');
+  item.classList.toggle('selected_canvas');
 }
 
 // mouse action
@@ -189,19 +169,38 @@ function renderApp() {
 // listeners function app
 
 function setUpListners() {
+  // tool selection
   document.querySelectorAll('[data-tool]').forEach(item => {
     item.addEventListener('click', event => switchTool(event, item));
   });
+  // size line selection
   document.querySelectorAll('[data-line-size]').forEach(item => {
     item.addEventListener('click', event => switchLineSize(event, item));
   });
+
+  // color selection
   document.querySelector('#color1').addEventListener('input', event => {
     curColor = event.target.value;
   });
+
+  // canvas size selection
   document.querySelectorAll('[data-canvas-size]').forEach(item => {
     item.addEventListener('click', event => switchCanvasSize(event, item));
   });
-  document.querySelector('.add-frame-action').addEventListener('click', () => addNewFrame());
+
+  // frame selection
+  document.querySelector('.add-frame-action').addEventListener('click', () => {
+    addNewFrame();
+    // frame selection
+    document.querySelectorAll('[data-title-name]').forEach(item => {
+      item.addEventListener('click', event => switchFrame(event, item));
+    });
+
+    // document.querySelectorAll('[data-canvas-count]').forEach(item => {
+    //   item.addEventListener('click', event => switchCanvas(event, item);
+    // });
+  });
+
   canvas.addEventListener('mousedown', mouseDown);
   canvas.addEventListener('mouseup', mouseUp);
   canvas.addEventListener('mousemove', mouseMove);
