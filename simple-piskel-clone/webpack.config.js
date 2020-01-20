@@ -3,12 +3,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: ['@babel/polyfill', './src/index.js'],
+  context: path.resolve(__dirname, 'src'),
+  mode: 'development',
+  entry: {
+    main: './index.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].js',
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -19,15 +24,17 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './index.html',
       filename: 'index.html',
     }),
     new MiniCssExtractPlugin({
       filename: 'style.css',
-    })
+    }),
+    new CleanWebpackPlugin(),
   ],
   module: {
-    rules: [{
+    rules: [
+      {
         enforce: 'pre',
         test: /\.js$/,
         exclude: /node_modules/,
@@ -35,7 +42,8 @@ module.exports = {
       },
       {
         test: /\.(svg|jpg|png|gif|svg)$/,
-        use: [{
+        use: [
+          {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
@@ -55,12 +63,25 @@ module.exports = {
         ],
       },
       {
+        test: /\.(ttf|woff|woff2|eot)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: './assets/fonts',
+              useRelativePath: true,
+            },
+          },
+        ],
+      },
+      {
         test: /\.html$/,
         use: [
           {
             loader: 'html-loader',
             options: { attrs: [':data-src'] },
-          }
+          },
         ],
       },
       {
@@ -75,7 +96,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-      }
+      },
     ],
   },
 };

@@ -2,7 +2,7 @@
   "name": "fancy-weather",
   "version": "1.0.0",
   "description": "Weather forecast app",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development",
@@ -23,6 +23,7 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
     "eslint": "^6.7.1",
     "eslint-config-airbnb": "^18.0.1",
@@ -53,6 +54,8 @@
     "@babel/polyfill": "^7.7.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "fibers": "^4.0.2",
+    "normalize.css": "^8.0.1",
+    "serialize-javascript": "^2.1.2",
     "sockjs": "^0.3.19"
   }
 }
