@@ -4,6 +4,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const isDev = process.env.NODE_ENV === 'development';
+const isProd = !isDev;
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -26,10 +30,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './index.html',
       filename: 'index.html',
+      minify: isProd,
     }),
     new MiniCssExtractPlugin({
       filename: 'style.css',
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/assets/favicon/favicon.ico'),
+        to: path.resolve(__dirname, 'dist/assets/favicon'),
+      },
+    ]),
     new CleanWebpackPlugin(),
   ],
   module: {
