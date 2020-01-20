@@ -5,28 +5,37 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
-module.exports = {
-  context: path.resolve(__dirname, 'src'),
-  mode: 'development',
-  entry: {
-    main: './index.js',
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash].js',
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    port: 9000,
-  },
-  optimization: {
-    minimizer: [new UglifyJsPlugin({}), new OptimizeCSSAssetsPlugin({})],
-  },
-  plugins: [
+const optimization = () => {
+  let minimizer = [];
+  if (isProd) {
+    minimizer = [new UglifyJsPlugin({}), new OptimizeCSSAssetsPlugin({})];
+  }
+  return minimizer;
+};
+
+const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+
+const babelOptions = preset => {
+  const opts = {
+    presets: ['@babel/preset-env'],
+    plugins: ['@babel/plugin-proposal-class-properties'],
+  };
+
+  if (preset) {
+    opts.presets.push(preset);
+  }
+
+  return opts;
+};
+
+const plugins = () => {
+  const base = [
     new HtmlWebpackPlugin({
       template: './index.html',
       filename: 'index.html',
@@ -42,7 +51,35 @@ module.exports = {
       },
     ]),
     new CleanWebpackPlugin(),
-  ],
+    new LodashModuleReplacementPlugin(),
+  ];
+
+  if (isProd) {
+    base.push(new BundleAnalyzerPlugin());
+  }
+
+  return base;
+};
+
+module.exports = {
+  context: path.resolve(__dirname, 'src'),
+  mode: 'development',
+  entry: {
+    index: ['@babel/polyfill', './index.js'],
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: filename('js'),
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 4200,
+  },
+  optimization: {
+    minimizer: optimization(),
+  },
+  devtool: isDev ? 'source-map' : '',
+  plugins: plugins(),
   module: {
     rules: [
       {
@@ -107,6 +144,26 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+          plugins: ['@babel/plugin-proposal-class-properties', 'lodash'],
+        },
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: {
+          loader: 'babel-loader',
+          options: babelOptions('@babel/preset-typescript'),
+        },
+      },
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules/,
+        loader: {
+          loader: 'babel-loader',
+          options: babelOptions('@babel/preset-react'),
+        },
       },
     ],
   },
