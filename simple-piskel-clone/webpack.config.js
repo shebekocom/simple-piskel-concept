@@ -55,9 +55,8 @@ const plugins = () => {
   ];
 
   if (isProd) {
-    base.push(new BundleAnalyzerPlugin());
+    base.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
   }
-
   return base;
 };
 

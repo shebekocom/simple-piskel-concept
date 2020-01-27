@@ -2,14 +2,16 @@ module.exports = {
   "env": {
       "browser": true,
       "es6": true,
-      "node": true
+      "node": true,
+      "jest/globals": true
   },
   "extends": [
       "airbnb/hooks",
       "airbnb/base",
       "eslint:recommended",
       "plugin:react/recommended",
-      "plugin:prettier/recommended"
+      "plugin:prettier/recommended",
+      "plugin:jest/recommended",
   ],
   "globals": {
       "Atomics": "readonly",
@@ -26,7 +28,8 @@ module.exports = {
   },
   "plugins": [
       "react",
-      "prettier"
+      "prettier",
+      "jest"
   ],
   "rules": {
       "linebreak-style": ["error", (process.platform === "win32" ? "windows" : "unix")],
@@ -38,6 +41,11 @@ module.exports = {
       "comma-dangle": "off",
       "arrow-parens": "off",
       "no-constant-condition": ["error", { "checkLoops": false }],
+      "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
   },
       "settings": {
          

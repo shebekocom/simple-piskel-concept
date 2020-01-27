@@ -7,10 +7,11 @@
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "dev": "cross-env NODE_ENV=development webpack --mode development",
     "dev:watch": "webpack --mode development --watch",
-    "start": "webpack-dev-server --mode development --open",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "stats": "webpack --json > stats.json && webpack-bundle-analyzer stats.json"
+    "stats": "webpack --json > stats.json && webpack-bundle-analyzer stats.json",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,7 @@
     "eslint-loader": "^3.0.2",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^23.6.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
@@ -46,6 +48,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.0.0-beta.11",
     "image-webpack-loader": "^6.0.0",
+    "jest": "^25.1.0",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.13.0",
