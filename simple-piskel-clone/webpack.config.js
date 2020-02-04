@@ -37,14 +37,23 @@ const babelOptions = preset => {
 const plugins = () => {
   const base = [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: './html/index.html',
       filename: 'index.html',
+      minify: isProd,
+    }),
+    new HtmlWebpackPlugin({
+      template: './html/createsprite.html',
+      filename: 'createsprite.html',
       minify: isProd,
     }),
     new MiniCssExtractPlugin({
       filename: 'style.css',
     }),
     new CopyWebpackPlugin([
+      // {
+      //   from: path.resolve(__dirname, 'src/html/'),
+      //   to: path.resolve(__dirname, 'dist'),
+      // },
       {
         from: path.resolve(__dirname, 'src/assets/favicon/favicon.ico'),
         to: path.resolve(__dirname, 'dist/assets/favicon'),

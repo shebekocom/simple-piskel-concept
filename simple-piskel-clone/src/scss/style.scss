@@ -26,6 +26,45 @@ body {
   background-color: transparent;
 }
 
+.header_landing{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.logo_landing{
+  background:url(../assets/img/logo_landing_second.png) no-repeat;
+  width: 1055px;
+  height: 514px;
+  margin: 0 auto;
+  transition: 1s;
+  &:hover{
+    background:url(../assets/img/logo_landing.png) no-repeat;
+  }
+}
+
+.nav_landing{
+  margin: 0 auto;
+}
+
+.nav_list{
+  display: flex;
+  list-style: none;
+  margin-top: 100px;
+  justify-content: center;
+  &-item{
+    border: 2px solid #000000;
+    margin-right: 25px;
+    padding: 22px 60px;
+    color: #000000;
+    text-decoration: none;
+    &:hover{
+      background-color: #000000;
+      color: #ffffff;
+    }
+  }
+}
+
 canvas {
   image-rendering: pixelated;
 }
