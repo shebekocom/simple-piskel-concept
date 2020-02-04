@@ -10,9 +10,9 @@ import drawImage from './modules/drawImage'; // stroke tools
 import addNewFrame from './modules/addNewFrame'; // add New Frame
 
 const canvas = document.querySelector('.canvas');
-const canvasFmame = document.querySelector('.frame-canvas');
-const ctxFrame = canvasFmame.getContext('2d');
 const ctx = canvas.getContext('2d');
+let canvasFmame = document.querySelector('.frame-canvas');
+let ctxFrame = canvasFmame.getContext('2d');
 let isMouseDown = false;
 let pos0 = [];
 let pos1 = [];
@@ -26,9 +26,12 @@ canvas.height = canvasSize;
 canvasFmame.width = canvasSize;
 canvasFmame.height = canvasSize;
 let pixelSize = 1;
+
+// переносим изображение на маленький фрейм
 function newFrame() {
   ctxFrame.drawImage(canvas, 0, 0);
 }
+
 function setTool(x, y) {
   switch (curTool) {
     case 'pensil':
@@ -105,6 +108,13 @@ function switchCanvasSize(event, item) {
 function switchFrame(event, item) {
   document.querySelector('[data-title-name].selected_canvas').classList.toggle('selected_canvas');
   item.classList.toggle('selected_canvas');
+}
+
+function switchCanvas(event) {
+  canvasFmame = document.querySelector(`[data-canvas-count='${event.target.dataset.canvasCount}']`);
+  ctxFrame = canvasFmame.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(canvasFmame, 0, 0);
 }
 
 // mouse action
@@ -191,14 +201,20 @@ function setUpListners() {
   // frame selection
   document.querySelector('.add-frame-action').addEventListener('click', () => {
     addNewFrame();
+    const frames = document.querySelectorAll('[data-canvas-count]');
+    canvasFmame = document.querySelector(`[data-canvas-count='${frames.length - 1}']`);
+    ctxFrame = canvasFmame.getContext('2d');
+
+    // clear main fraim
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     // frame selection
     document.querySelectorAll('[data-title-name]').forEach(item => {
       item.addEventListener('click', event => switchFrame(event, item));
     });
 
-    // document.querySelectorAll('[data-canvas-count]').forEach(item => {
-    //   item.addEventListener('click', event => switchCanvas(event, item);
-    // });
+    document.querySelectorAll('[data-canvas-count]').forEach(item => {
+      item.addEventListener('click', event => switchCanvas(event));
+    });
   });
 
   canvas.addEventListener('mousedown', mouseDown);
