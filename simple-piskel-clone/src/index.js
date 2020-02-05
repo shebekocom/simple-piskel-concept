@@ -8,11 +8,14 @@ import eraserTool from './modules/eraserTool'; // eraser tools
 import strokeTool from './modules/strokeTool'; // stroke tools
 import drawImage from './modules/drawImage'; // stroke tools
 import addNewFrame from './modules/addNewFrame'; // add New Frame
+import previewAnimation from './modules/previewAnimation'; // previe Animation
 
 const canvas = document.querySelector('.canvas');
 const ctx = canvas.getContext('2d');
 let canvasFmame = document.querySelector('.frame-canvas');
 let ctxFrame = canvasFmame.getContext('2d');
+const previewCanvas = document.querySelector('.preview-container');
+const ctxPreview = previewCanvas.getContext('2d');
 let isMouseDown = false;
 let pos0 = [];
 let pos1 = [];
@@ -20,12 +23,13 @@ let curTool = '';
 let curColor = '#000000';
 ctx.fillStyle = curColor;
 // let prevColor = 'red';
-let canvasSize = 32;
-canvas.width = canvasSize;
-canvas.height = canvasSize;
-canvasFmame.width = canvasSize;
-canvasFmame.height = canvasSize;
+let canvasSize = [32, 32];
+[canvas.width, canvas.height] = canvasSize;
+[canvasFmame.width, canvasFmame.height] = canvasSize;
+[previewCanvas.width, previewCanvas.height] = canvasSize;
+
 let pixelSize = 1;
+const arrFrames = [canvasFmame.toDataURL()];
 
 // переносим изображение на маленький фрейм
 function newFrame() {
@@ -94,15 +98,16 @@ function switchLineSize(event, item) {
 function switchCanvasSize(event, item) {
   document.querySelector('[data-canvas-size].selected').classList.toggle('selected');
   item.classList.toggle('selected');
-  canvasSize = Number(item.dataset.canvasSize);
+  canvasSize = [Number(item.dataset.canvasSize), Number(item.dataset.canvasSize)];
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const imageDataFrame = ctx.getImageData(0, 0, canvasFmame.width, canvasFmame.height);
-  canvas.width = canvasSize;
-  canvas.height = canvasSize;
-  canvasFmame.width = canvasSize;
-  canvasFmame.height = canvasSize;
+  const imageDataPreview = ctx.getImageData(0, 0, previewCanvas.width, previewCanvas.height);
+  [canvas.width, canvas.height] = canvasSize;
+  [canvasFmame.width, canvasFmame.height] = canvasSize;
+  [previewCanvas.width, previewCanvas.height] = canvasSize;
   ctx.putImageData(imageData, 0, 0);
   ctxFrame.putImageData(imageDataFrame, 0, 0);
+  ctxPreview.putImageData(imageDataPreview, 0, 0);
 }
 
 function switchFrame(event, item) {
@@ -152,6 +157,10 @@ function mouseUp(event) {
 
   isMouseDown = false;
   ctx.beginPath();
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  // arrFrames.splice(arrFrames.length - 1, 1, canvas.toDataURL());
+  arrFrames.splice(arrFrames.length - 1, 1, imageData);
+  previewAnimation(canvas, previewCanvas, ctxPreview, arrFrames);
   newFrame();
 }
 
@@ -201,10 +210,12 @@ function setUpListners() {
   // frame selection
   document.querySelector('.add-frame-action').addEventListener('click', () => {
     addNewFrame();
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // arrFrames.push(canvas.toDataURL());
+    arrFrames.push(imageData);
     const frames = document.querySelectorAll('[data-canvas-count]');
     canvasFmame = document.querySelector(`[data-canvas-count='${frames.length - 1}']`);
     ctxFrame = canvasFmame.getContext('2d');
-
     // clear main fraim
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // frame selection
