@@ -1,5 +1,9 @@
-export default function previewAnimation(canvas, previewCanvas, ctxPreview, arrFrames) {
+import getFps from './utils';
+import drawFps from './drawFps';
+
+export default function previewAnimation(canvas, previewCanvas, ctxPreview, arrFrames, fpsparam) {
   const arrFramesNew = arrFrames;
+  let fps = fpsparam;
   // let now;
   // let then;
   // let elapsed;
@@ -27,9 +31,10 @@ export default function previewAnimation(canvas, previewCanvas, ctxPreview, arrF
   // }
   let counter = 0;
   let stopAnimation = false;
-  let fps = 5;
+  // fps selection
   document.querySelector('.range-fps').addEventListener('change', function changeFps() {
     fps = this.value;
+    drawFps(fps);
   });
 
   function animate() {
@@ -42,7 +47,7 @@ export default function previewAnimation(canvas, previewCanvas, ctxPreview, arrF
         counter = 0;
       }
       requestAnimationFrame(animate);
-    }, 1000 / fps);
+    }, getFps(fps));
   }
   animate(fps);
 

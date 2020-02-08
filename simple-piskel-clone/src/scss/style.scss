@@ -538,3 +538,19 @@ canvas {
   margin-left: 15px;
   padding: 10px;
 }
+
+.export {
+  display: flex;
+  margin-top: 20px;
+  color:red;
+  margin-left: 25px;
+  justify-content: center;
+  &-item{
+    margin-right: 15px;
+    padding: 8px 16px;
+    background-color: #000000;
+    color: #ffffff;
+    border: 0;
+    font-size: 12px;
+  }
+}

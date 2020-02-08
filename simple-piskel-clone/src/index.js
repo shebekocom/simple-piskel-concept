@@ -9,6 +9,7 @@ import strokeTool from './modules/strokeTool'; // stroke tools
 import drawImage from './modules/drawImage'; // stroke tools
 import addNewFrame from './modules/addNewFrame'; // add New Frame
 import previewAnimation from './modules/previewAnimation'; // previe Animation
+import getUPNG from './modules/getUPNG';
 
 const canvas = document.querySelector('.canvas');
 const ctx = canvas.getContext('2d');
@@ -22,6 +23,7 @@ let pos1 = [];
 let curTool = '';
 let curColor = '#000000';
 ctx.fillStyle = curColor;
+let fps = document.querySelector('.range-fps').value;
 // let prevColor = 'red';
 let canvasSize = [32, 32];
 [canvas.width, canvas.height] = canvasSize;
@@ -30,6 +32,7 @@ let canvasSize = [32, 32];
 
 let pixelSize = 1;
 const arrFrames = [canvasFmame.toDataURL()];
+const arrBuffer = [canvasFmame.toDataURL()];
 
 // переносим изображение на маленький фрейм
 function newFrame() {
@@ -158,9 +161,9 @@ function mouseUp(event) {
   isMouseDown = false;
   ctx.beginPath();
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  // arrFrames.splice(arrFrames.length - 1, 1, canvas.toDataURL());
   arrFrames.splice(arrFrames.length - 1, 1, imageData);
-  previewAnimation(canvas, previewCanvas, ctxPreview, arrFrames);
+  arrBuffer.splice(arrBuffer.length - 1, 1, imageData.data.buffer);
+  previewAnimation(canvas, previewCanvas, ctxPreview, arrFrames, fps);
   newFrame();
 }
 
@@ -213,6 +216,9 @@ function setUpListners() {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     // arrFrames.push(canvas.toDataURL());
     arrFrames.push(imageData);
+    arrBuffer.push(imageData.data.buffer);
+    console.log('arrBuffer: ', arrBuffer);
+
     const frames = document.querySelectorAll('[data-canvas-count]');
     canvasFmame = document.querySelector(`[data-canvas-count='${frames.length - 1}']`);
     ctxFrame = canvasFmame.getContext('2d');
@@ -228,7 +234,11 @@ function setUpListners() {
     });
   });
 
-  // fps selection
+  document.querySelector('.upng').addEventListener('click', () => {
+    fps = document.querySelector('.range-fps').value;
+    const fileName = 'upng';
+    getUPNG(fileName, arrBuffer, fps, canvas.width, canvas.height);
+  });
 
   canvas.addEventListener('mousedown', mouseDown);
   canvas.addEventListener('mouseup', mouseUp);

@@ -60,6 +60,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
     "core-js": "^3.6.4",
-    "normalize.css": "^8.0.1"
+    "downloadjs": "^1.4.7",
+    "normalize.css": "^8.0.1",
+    "upng-js": "^2.1.0"
   }
 }

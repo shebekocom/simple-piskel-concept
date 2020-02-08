@@ -79,9 +79,11 @@
          
         <aside class="size">
             <canvas class="preview-container"></canvas>
-              <span id="display-fps" class="display-fps">7 FPS</span>
-              <input id="preview-fps" class="range-fps" type="range" min="0" max="24">
+              <span id="display-fps" class="display-fps">5 FPS</span>
+              <input id="preview-fps" class="range-fps" type="range" value="5" min="1" max="24">
         </aside>
+        <div class="export"><button class="export-item upng">UPNG</button>
+        <button class="export-item gif">GIF</button></div>
         <ul class="canvas_size">
             <li class="canvas_size--number selected" data-canvas-size="32" title="32x32 Canvas">32x32</li>
             <li class="canvas_size--number" data-canvas-size="64" title="64x64 Canvas">64x64</li>
