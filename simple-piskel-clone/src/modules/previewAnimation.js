@@ -25,15 +25,13 @@ export default function previewAnimation(canvas, previewCanvas, ctxPreview, arrF
   // then = Date.now();
   //   animate();
   // }
-  const fps = 5;
   let counter = 0;
   let stopAnimation = false;
-  canvas.addEventListener('mousedown', () => {
-    stopAnimation = true;
+  let fps = 5;
+  document.querySelector('.range-fps').addEventListener('change', function changeFps() {
+    fps = this.value;
   });
-  canvas.addEventListener('mouseup', () => {
-    stopAnimation = false;
-  });
+
   function animate() {
     if (stopAnimation === true) return;
     setTimeout(() => {
@@ -47,4 +45,12 @@ export default function previewAnimation(canvas, previewCanvas, ctxPreview, arrF
     }, 1000 / fps);
   }
   animate(fps);
+
+  canvas.addEventListener('mousedown', () => {
+    stopAnimation = true;
+  });
+
+  canvas.addEventListener('mouseup', () => {
+    stopAnimation = false;
+  });
 }

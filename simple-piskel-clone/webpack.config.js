@@ -5,8 +5,6 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
@@ -50,22 +48,13 @@ const plugins = () => {
       filename: 'style.css',
     }),
     new CopyWebpackPlugin([
-      // {
-      //   from: path.resolve(__dirname, 'src/html/'),
-      //   to: path.resolve(__dirname, 'dist'),
-      // },
       {
         from: path.resolve(__dirname, 'src/assets/favicon/favicon.ico'),
         to: path.resolve(__dirname, 'dist/assets/favicon'),
       },
     ]),
     new CleanWebpackPlugin(),
-    new LodashModuleReplacementPlugin(),
   ];
-
-  if (isProd) {
-    base.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
-  }
   return base;
 };
 
@@ -154,7 +143,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-proposal-class-properties', 'lodash'],
+          plugins: ['@babel/plugin-proposal-class-properties'],
         },
       },
       {

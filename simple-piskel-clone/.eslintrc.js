@@ -6,10 +6,8 @@ module.exports = {
       "jest/globals": true
   },
   "extends": [
-      "airbnb/hooks",
       "airbnb/base",
       "eslint:recommended",
-      "plugin:react/recommended",
       "plugin:prettier/recommended",
       "plugin:jest/recommended",
   ],
@@ -27,7 +25,6 @@ module.exports = {
       "sourceType": "module"
   },
   "plugins": [
-      "react",
       "prettier",
       "jest"
   ],
@@ -49,12 +46,6 @@ module.exports = {
   },
       "settings": {
          
-          "react": {
-              "createClass": "createReactClass",
-              "pragma": "React", 
-              "version": "16.0",
-              "flowVersion": "0.53" 
-          },
           "propWrapperFunctions": [
               "forbidExtraProps",
               {

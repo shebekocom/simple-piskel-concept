@@ -228,6 +228,8 @@ function setUpListners() {
     });
   });
 
+  // fps selection
+
   canvas.addEventListener('mousedown', mouseDown);
   canvas.addEventListener('mouseup', mouseUp);
   canvas.addEventListener('mousemove', mouseMove);
