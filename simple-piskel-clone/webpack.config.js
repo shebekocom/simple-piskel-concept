@@ -52,6 +52,14 @@ const plugins = () => {
         from: path.resolve(__dirname, 'src/assets/favicon/favicon.ico'),
         to: path.resolve(__dirname, 'dist/assets/favicon'),
       },
+      {
+        from: path.resolve(__dirname, 'src/modules/libraries/gif.js'),
+        to: path.resolve(__dirname, 'dist/libraries/gif.js'),
+      },
+      {
+        from: path.resolve(__dirname, 'src/modules/libraries/gif.worker.js'),
+        to: path.resolve(__dirname, 'dist/libraries/gif.worker.js'),
+      },
     ]),
     new CleanWebpackPlugin(),
   ];

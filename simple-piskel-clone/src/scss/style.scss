@@ -59,9 +59,12 @@ body {
     padding: 22px 60px;
     color: #000000;
     text-decoration: none;
+    font-weight: bold;
     &:hover{
       background-color: #000000;
       color: #ffffff;
+      padding: 22px 200px;
+      
     }
   }
 }

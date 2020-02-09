@@ -10,6 +10,7 @@ import drawImage from './modules/drawImage'; // stroke tools
 import addNewFrame from './modules/addNewFrame'; // add New Frame
 import previewAnimation from './modules/previewAnimation'; // previe Animation
 import getUPNG from './modules/getUPNG';
+import getGIF from './modules/getGIF';
 // eslint-disable-next-line no-unused-vars
 import login from './modules/login';
 
@@ -234,6 +235,11 @@ function setUpListners() {
     document.querySelectorAll('[data-canvas-count]').forEach(item => {
       item.addEventListener('click', event => switchCanvas(event));
     });
+  });
+
+  document.querySelector('.gif').addEventListener('click', () => {
+    fps = document.querySelector('.range-fps').value;
+    getGIF(arrFrames, fps, canvas);
   });
 
   document.querySelector('.upng').addEventListener('click', () => {
