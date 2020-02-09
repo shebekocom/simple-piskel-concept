@@ -61,6 +61,7 @@
     "@babel/polyfill": "^7.7.0",
     "core-js": "^3.6.4",
     "downloadjs": "^1.4.7",
+    "firebase": "^7.8.1",
     "normalize.css": "^8.0.1",
     "upng-js": "^2.1.0"
   }

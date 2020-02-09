@@ -13,11 +13,97 @@
     <div class="logo_landing"></div>
     <nav class="nav_landing">
       <ul class="nav_list">
-        <a href=""><li class="nav_list-item">Sign in</li></a>
-        <a href="createsprite.html"><li class="nav_list-item">Create Sprite</li></a>
+        <li class="nav_list-item sign-in">Sign in</li>
+        <li class="nav_list-item create-sprite">Create Sprite</li>
       </ul>
     </nav>
   </header>
+  <div class="container">
+    <header class="header">
+      <nav class="navigation">
+        <div class="toggle">
+          <svg class="toggle_icon" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 12H18V10H0V12ZM0 7H18V5H0V7ZM0 0V2H18V0H0Z" fill="black"
+              fill-opacity="0.54" />
+          </svg>
+        </div>
+
+        <div class="logo"></div>
+        <button class="login">Login</button>
+      </nav>
+    </header>
+    <main class="main">
+      <div class="wrapper_left">
+        <aside class="tools">
+            <section class="pen-size-container size-picker-container"><span hidden>Pen size from 1 to 4 pixels</span>
+            <div class="pen-size-option size-picker-option selected" data-line-size="1"></div>
+            <div class="pen-size-option size-picker-option" data-line-size="2"></div>
+            <div class="pen-size-option size-picker-option" data-line-size="3"></div>
+            <div class="pen-size-option size-picker-option" data-line-size="4"></div>
+          </section>
+          <ul class="list_tools">
+              <li class="item_tools pensil selected" data-tool="pensil"><span
+                class="text_item" hidden>Pensil tool</span></li>
+                <li class="item_tools color" data-tool="color"><span
+                  class="text_item" hidden>Choose color</span></li>
+            <li class="item_tools fill" data-tool="fill"><span
+                class="text_item" hidden>Fill bucket</span></li>
+                <li class="item_tools stroke" data-tool="stroke"><span
+                  class="text_item" hidden>Stroke tool</span></li>
+                  <li class="item_tools fillpixel" data-tool="fillpixel"><span
+                    class="text_item" hidden>Paint all pixels of the same color</span></li>
+                <li class="item_tools eraser" data-tool="eraser"><span
+                  class="text_item" hidden>Eraser tool</span></li>
+            
+                
+          </ul>
+          <section class="color-palette">
+            <label for="color1">
+            <div class="color-palette--first"><input class="color-palette--first-input" type="color" id="color1"></div></label>
+            <label for="color2">
+            <div class="color-palette--second"><input class="color-palette--second-input" type="color" id="color2"></div></label>
+            <div class="color-palette--change"></div>
+          </section>
+        </aside>
+        
+      </div>
+      <div class="wrapper_left_second">
+          <ul class="frame-list">
+              <li class="frame-title selected_canvas" data-title-name="0">
+                  <div class="canvas-bg">
+                      <div></div>
+                      <canvas class="frame-canvas" data-canvas-count="0" width="32" height="32"></canvas>
+                  </div>
+                  <div class="frame-number">1</div>
+                  <div class="del-frame"></div>
+                  <div class="move-frame"></div>
+                  <div class="duplicate-frame"></div>
+              </li>
+          </ul>
+          <div id="add-frame-action" class="add-frame-action" data-tile-action="newframe"><div class="add-frame-action--icon"></div>
+          <div class="add-frame-action--label">Add new frame</div></div>
+        </div>
+      <div class="wrapper_center">
+        <canvas id="canvas" class="canvas">s</canvas>
+      </div>
+      <div class="wrapper_right">
+         
+        <aside class="size">
+            <canvas class="preview-container"></canvas>
+              <span id="display-fps" class="display-fps">5 FPS</span>
+              <input id="preview-fps" class="range-fps" type="range" value="5" min="1" max="24">
+        </aside>
+        <div class="export"><button class="export-item upng">UPNG</button>
+        <button class="export-item gif">GIF</button></div>
+        <ul class="canvas_size">
+            <li class="canvas_size--number selected" data-canvas-size="32" title="32x32 Canvas">32x32</li>
+            <li class="canvas_size--number" data-canvas-size="64" title="64x64 Canvas">64x64</li>
+            <li class="canvas_size--number" data-canvas-size="128" title="128x128 Canvas">128x128</li>
+        </ul>
+      </div>
+    </main>
+    <footer class="footer"></footer>
+  </div>
 </body>
 
 </html>

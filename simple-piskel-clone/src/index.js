@@ -10,6 +10,8 @@ import drawImage from './modules/drawImage'; // stroke tools
 import addNewFrame from './modules/addNewFrame'; // add New Frame
 import previewAnimation from './modules/previewAnimation'; // previe Animation
 import getUPNG from './modules/getUPNG';
+// eslint-disable-next-line no-unused-vars
+import login from './modules/login';
 
 const canvas = document.querySelector('.canvas');
 const ctx = canvas.getContext('2d');
@@ -238,6 +240,13 @@ function setUpListners() {
     fps = document.querySelector('.range-fps').value;
     const fileName = 'upng';
     getUPNG(fileName, arrBuffer, fps, canvas.width, canvas.height);
+  });
+
+  document.querySelector('.login').addEventListener('click', login);
+  document.querySelector('.sign-in').addEventListener('click', login);
+  document.querySelector('.create-sprite').addEventListener('click', () => {
+    document.querySelector('.header_landing').style.visibility = 'hidden';
+    document.querySelector('.container').style.visibility = 'visible';
   });
 
   canvas.addEventListener('mousedown', mouseDown);
