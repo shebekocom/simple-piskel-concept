@@ -1,17 +1,13 @@
 import './css/style.css';
 import './scss/style.scss';
 import '@babel/polyfill';
-import pensilTool from './modules/pensilTool'; // pensil tools
 import colorTool from './modules/colorTool'; // color tools
 import fillTool from './modules/fillTool'; // fill bucket tools
-import eraserTool from './modules/eraserTool'; // eraser tools
-import strokeTool from './modules/strokeTool'; // stroke tools
 import drawImage from './modules/drawImage'; // stroke tools
 import addNewFrame from './modules/addNewFrame'; // add New Frame
 import previewAnimation from './modules/previewAnimation'; // previe Animation
 import getUPNG from './modules/getUPNG';
 import getGIF from './modules/getGIF';
-// eslint-disable-next-line no-unused-vars
 import login from './modules/login';
 
 const canvas = document.querySelector('.canvas');
@@ -23,7 +19,7 @@ const ctxPreview = previewCanvas.getContext('2d');
 let isMouseDown = false;
 let pos0 = [];
 let pos1 = [];
-let curTool = '';
+let curTool = 'pensil';
 let curColor = '#000000';
 ctx.fillStyle = curColor;
 let fps = document.querySelector('.range-fps').value;
@@ -53,7 +49,10 @@ function setTool(x, y) {
         pos1 = [x, y];
       }
       drawImage(pos0, pos1, ctx, curColor, pixelSize);
-      pensilTool();
+      break;
+
+    case 'fillpixel':
+      fillAllPixel();
       break;
 
     case 'color':
@@ -73,13 +72,11 @@ function setTool(x, y) {
         pos1 = [x, y];
       }
       drawImage(pos0, pos1, ctx, curColor, pixelSize);
-      eraserTool();
       break;
 
     case 'stroke':
       pos1 = [x, y];
       drawImage(pos0, pos1, ctx, curColor, pixelSize);
-      strokeTool();
       break;
 
     default:
@@ -149,6 +146,9 @@ function mouseDown(event) {
   if (curTool === 'fill') {
     setTool(x, y);
   }
+  if (curTool === 'fillpixel') {
+    setTool(x, y);
+  }
   if (curTool === 'color') {
     setTool(x, y);
   }
@@ -183,12 +183,6 @@ function mouseMove(event) {
 function mouseLeave() {
   pos0 = [];
   pos1 = [];
-}
-
-// render app
-
-function renderApp() {
-  console.log('render app');
 }
 
 // listeners function app
@@ -261,10 +255,50 @@ function setUpListners() {
   canvas.addEventListener('mouseleave', mouseLeave);
 }
 
+// keybord shotcurts
+
+const boardHotKey = {
+  keyP: 80,
+  keyB: 66,
+  keyO: 79,
+  keyE: 69,
+  keyA: 65,
+  keyL: 76,
+  keyS: 83,
+  keyD: 68,
+  keyC: 67,
+};
+document.addEventListener('keydown', event => {
+  if (event.keyCode === boardHotKey.keyE) {
+    curTool = 'eraser';
+    document.querySelectorAll('[data-tool]').forEach(item => item.classList.remove('selected'));
+    document.querySelector('.eraser').classList.toggle('selected');
+  } else if (event.keyCode === boardHotKey.keyP) {
+    curTool = 'pensil';
+    document.querySelectorAll('[data-tool]').forEach(item => item.classList.remove('selected'));
+    document.querySelector('.pensil').classList.toggle('selected');
+  } else if (event.keyCode === boardHotKey.keyL) {
+    curTool = 'stroke';
+    document.querySelectorAll('[data-tool]').forEach(item => item.classList.remove('selected'));
+    document.querySelector('.stroke').classList.toggle('selected');
+  } else if (event.keyCode === boardHotKey.keyB) {
+    curTool = 'fill';
+    document.querySelectorAll('[data-tool]').forEach(item => item.classList.remove('selected'));
+    document.querySelector('.fill').classList.toggle('selected');
+  } else if (event.keyCode === boardHotKey.keyO) {
+    curTool = 'color';
+    document.querySelectorAll('[data-tool]').forEach(item => item.classList.remove('selected'));
+    document.querySelector('.color').classList.toggle('selected');
+  } else if (event.keyCode === boardHotKey.keyA) {
+    curTool = 'fillpixel';
+    document.querySelectorAll('[data-tool]').forEach(item => item.classList.remove('selected'));
+    document.querySelector('.fillpixel').classList.toggle('selected');
+  }
+});
+
 // init function
 
 function init() {
   setUpListners();
-  renderApp();
 }
 init();
