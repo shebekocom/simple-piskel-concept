@@ -9,6 +9,7 @@ import previewAnimation from './modules/previewAnimation'; // previe Animation
 import getUPNG from './modules/getUPNG';
 import getGIF from './modules/getGIF';
 import login from './modules/login';
+import { openFullscreen, closeFullscreen } from './modules/fullscreen';
 
 const canvas = document.querySelector('.canvas');
 const ctx = canvas.getContext('2d');
@@ -17,6 +18,7 @@ let ctxFrame = canvasFmame.getContext('2d');
 const previewCanvas = document.querySelector('.preview-container');
 const ctxPreview = previewCanvas.getContext('2d');
 let isMouseDown = false;
+let isFullScreen = false;
 let pos0 = [];
 let pos1 = [];
 let curTool = 'pensil';
@@ -52,7 +54,7 @@ function setTool(x, y) {
       break;
 
     case 'fillpixel':
-      fillAllPixel();
+      console.log('парсер цвета с учётом прозрачности');
       break;
 
     case 'color':
@@ -293,6 +295,18 @@ document.addEventListener('keydown', event => {
     curTool = 'fillpixel';
     document.querySelectorAll('[data-tool]').forEach(item => item.classList.remove('selected'));
     document.querySelector('.fillpixel').classList.toggle('selected');
+  }
+});
+
+// Full screen
+const previewContainer = document.querySelector('.preview-container');
+document.querySelector('.preview-container').addEventListener('click', () => {
+  if (isFullScreen) {
+    closeFullscreen();
+    isFullScreen = false;
+  } else {
+    openFullscreen(previewContainer);
+    isFullScreen = true;
   }
 });
 
